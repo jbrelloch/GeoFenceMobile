@@ -116,7 +116,7 @@ function ProductView() {
 		self.SELECTED_DEVICE = e.name;
 		switch(e.name)
 		{
-			case 'At&t':
+			case 'Att':
 				var attView = AttView();
 				self.SELECTED_CONTROL_VIEW = attView;
 				controlView.add(attView);

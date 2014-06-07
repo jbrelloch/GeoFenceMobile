@@ -152,10 +152,10 @@ function AddRuleView(parentView, parentsParentView, controlView) {
 			};
 			switch(parentsParentView.SELECTED_DEVICE)
 			{
-				case 'At&t':
+				case 'Att':
 					controlView.fireEvent('addAttRuleComplete', {});
 					break;
-				case 'NEST':
+				case 'Nest':
 					if(controlView.homeButton.backgroundColor = 'blue') {
 						rule.SetStatus = "home";
 					}

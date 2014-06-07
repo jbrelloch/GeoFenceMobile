@@ -9,7 +9,7 @@ function MasterView() {
 		backgroundColor:'#CCAC00',
 		top:0,
 		width:'100%',
-		height:'20%'
+		height: 100
 	});
 		var homeButton = Ti.UI.createButton({
 		   title: 'home',
@@ -92,9 +92,9 @@ function MasterView() {
 
 	var table = Ti.UI.createTableView({
 		data:tableData,
-		height:'70%',
+		height:'60%',
 		width:'100%',
-		bottom:'20%',
+		top:'100',
 		backgroundColor:'white',
     	separatorColor :'#E0CD66'
 	});

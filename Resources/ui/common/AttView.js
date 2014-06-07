@@ -5,34 +5,54 @@ function AttView() {
 		height:'100%'
 	});
 	
+	var phoneField = Ti.UI.createTextField({
+	  color: '#336699',
+	  backgroundColor: 'white',
+	  borderColor: '#336699',
+	  font: {fontSize:20},
+	  borderWidth: 1,
+	  hintText:'phone number',
+	  top: 5, left: 5,
+	  width: '95%', height: 60
+	});
+	self.add(phoneField);
 	
+	var textContentArea = Ti.UI.createTextArea({
+	  borderWidth: 1,
+	  borderColor: '#336699',
+	  color: '#336699',
+	  font: {fontSize:20},
+	  textAlign: 'left',
+	  value: 'I am a textarea',
+	  top: 65, left: 5,
+	  width: '65%', height : 200
+	});
+	self.add(textContentArea);
 	
-	
-	
+	var callButton = Ti.UI.createButton({
+	   title: 'Call',
+	   top: 115,
+	   right: 5,
+	   height: 100,
+	   width: '30%'
+	});
+	callButton.addEventListener('click',function(e){
+		if(!self.DISABLE_CONTROLS) {
+			//AT&T CALL LOGIC
+		}
+		else {
+		}
+	});
+	self.add(callButton);
 	
 	self.addEventListener('addAttRule', function(e) {
 		self.DISABLE_CONTROLS = true;
+		callButton.hide();
 	});
 	
 	self.addEventListener('addAttRuleComplete', function(e) {
 		self.DISABLE_CONTROLS = false;
-		
-		// var xhr = Ti.Network.createHTTPClient();
-		// xhr.setTimeout(120000);
-		// xhr.open('GET', 'http://atthack.pagekite.me/nest');
-		// xhr.onload = function(incJSON) {
-			// var nestStatus = JSON.parse(incJSON.source.responseText);
-// 			
-			// tempLabel.text = nestStatus.target_temperature;
-			// currentTempLabel.text = 'Current: ' + nestStatus.current_temperature;
-// 			
-			// if(nestStatus.target_temperature >= 85)
-			// {
-				// homeButton.backgroundColor = 'gray';
-				// awayButton.backgroundColor = 'blue';
-			// }
-		// };
-		// xhr.send();
+		callButton.show();
 	});
 	self.fireEvent('addAttRuleComplete', {});
 	

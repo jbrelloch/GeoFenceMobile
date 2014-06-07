@@ -43,8 +43,8 @@ Titanium.Geolocation.getCurrentPosition(function(e){
 	if(e.success){
 		var ruleList = Ti.App.Properties.getList('RuleList', []);
 		
-		var dist = 99999999;
 		for(var i=0; i<ruleList.length; i++){
+			var dist = 99999999;
 			if(ruleList[i].unit == 'miles' || ruleList[i].unit == 'feet'){
 				dist = CalculateDist(e.coords.latitude, e.coords.longitude, ruleList[i].latitude, ruleList[i].longitude, "M");
 				if(ruleList[i].unit == 'feet'){
@@ -56,6 +56,10 @@ Titanium.Geolocation.getCurrentPosition(function(e){
 				if(ruleList[i].unit == 'meters'){
 					dist = metricDist * 1000;
 				}
+			}
+			
+			if(dist < 99999999) {//valid distance
+				
 			}
 		};
 	}
