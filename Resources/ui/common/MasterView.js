@@ -2,24 +2,24 @@
 function MasterView() {
 	//create object instance, parasitic subclass of Observable
 	var self = Ti.UI.createView({
-		backgroundColor:'black'
+		backgroundColor:'white'
 	});
 	
 	var tableData = [
-		{title:'NEST', hasChild:true, color: 'white'},
-		{title:'Wimo', hasChild:true, color: 'white'}
+		{title:'NEST', hasChild:true, color: '#CCAC00', font:{fontFamily:'Helvetica Neue',fontSize:22}},
+		{title:'WeMo', hasChild:true, color: '#CCAC00', font:{fontFamily:'Helvetica Neue',fontSize:22}}
 	];
 	
 	var latLabel = Ti.UI.createLabel({
 		id:'latitudelabel',
 		text:'',
-		color:'#fff',
+		color:'#CCAC00',
 		width:250,
 		height:'auto',
-		top: 15,
+		top: 5,
 		font:{
 			fontFamily:'Helvetica Neue',
-			fontSize:13
+			fontSize:18
 		},
 		textAlign:'center'
 	});
@@ -28,13 +28,13 @@ function MasterView() {
 	var longLabel = Ti.UI.createLabel({
 		id:'longitudelabel',
 		text:'',
-		color:'#fff',
+		color:'#CCAC00',
 		width:250,
 		height:'auto',
 		top: 25,
 		font:{
 			fontFamily:'Helvetica Neue',
-			fontSize:13
+			fontSize:18
 		},
 		textAlign:'center'
 	});
@@ -42,7 +42,7 @@ function MasterView() {
 
 	var table = Ti.UI.createTableView({
 		data:tableData,
-		top:50
+		top:80
 	});
 	self.add(table);
 

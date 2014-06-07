@@ -17,7 +17,6 @@ function ApplicationWindow() {
 
 	//add behavior for master view
 	masterView.addEventListener('itemSelected', function(e) {
-		//create detail view container
 		var productView = ProductView();
 		var productContainerWindow = Ti.UI.createWindow({
 			title:'Details',
@@ -28,7 +27,9 @@ function ApplicationWindow() {
 		productView.fireEvent('itemSelected',e);
 		productContainerWindow.open();
 	});
-
+	
+	/////////////////SERVICE///////////////////////
+	
 	return self;
 };
 
