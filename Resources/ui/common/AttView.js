@@ -23,15 +23,19 @@ function AttView() {
 	  color: '#336699',
 	  font: {fontSize:20},
 	  textAlign: 'left',
-	  value: 'I am a textarea',
-	  top: 65, left: 5,
-	  width: '65%', height : 200
+	  hintText: 'text content',
+	  top: 70, left: 5,
+	  width: '65%', height : 150
+	});
+	textContentArea.addEventListener('focus', function f(e){
+	    textContentArea.blur();
+	    textContentArea.removeEventListener('focus', f);
 	});
 	self.add(textContentArea);
 	
 	var callButton = Ti.UI.createButton({
 	   title: 'Call',
-	   top: 115,
+	   top: 100,
 	   right: 5,
 	   height: 100,
 	   width: '30%'

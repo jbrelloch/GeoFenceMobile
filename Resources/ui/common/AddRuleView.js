@@ -147,7 +147,7 @@ function AddRuleView(parentView, parentsParentView, controlView) {
 				radius: radiusField.value,
 				unit: unitPicker.getSelectedRow(0).title,
 				zone: zonePicker.getSelectedRow(0).title,
-				currentZone: zonePicker.getSelectedRow(0).title,
+				currentZone: '',
 				name: nameField.value
 			};
 			switch(parentsParentView.SELECTED_DEVICE)

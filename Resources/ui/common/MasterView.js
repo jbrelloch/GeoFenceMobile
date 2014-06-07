@@ -114,6 +114,16 @@ function MasterView() {
 		latLabel.text = e.coords.latitude;
 		longLabel.text = e.coords.longitude;
 	});
+	
+	// this will switch on the GPS service
+	if (Ti.Android.isServiceRunning(Ti.Android.createServiceIntent({url: 'GeoService.js'}))) {
+	} else {
+		var intent = Ti.Android.createServiceIntent({
+			url: 'GeoService.js'
+		});
+		intent.putExtra('interval', 60 * 1000);
+		Ti.Android.startService(intent);
+	}
 			
 	Ti.App.Properties.setList('RuleList', []);
 			

@@ -44,6 +44,7 @@ Titanium.Geolocation.getCurrentPosition(function(e){
 		var ruleList = Ti.App.Properties.getList('RuleList', []);
 		
 		for(var i=0; i<ruleList.length; i++){
+			//Calculate Distance
 			var dist = 99999999;
 			if(ruleList[i].unit == 'miles' || ruleList[i].unit == 'feet'){
 				dist = CalculateDist(e.coords.latitude, e.coords.longitude, ruleList[i].latitude, ruleList[i].longitude, "M");
@@ -59,7 +60,107 @@ Titanium.Geolocation.getCurrentPosition(function(e){
 			}
 			
 			if(dist < 99999999) {//valid distance
+				var fireAction = false;
+				if(ruleList[i].currentZone == ''){//initial state
+					if(dist > ruleList[i].radius && ruleList[i].zone == 'outside zone'){
+						fireAction = true;
+					}
+					else if(dist <= ruleList[i].radius && ruleList[i].zone == 'inside zone'){
+						fireAction = true;
+					}
+				}
+				else if(dist > ruleList[i].radius){
+					if(ruleList[i].zone == 'outside zone' && ruleList[i].currentZone == 'inside zone'){//moved from out to in
+						fireAction = true;
+					}
+					ruleList[i].currentZone = 'outside zone';
+				}
+				else if(dist <= ruleList[i].radius){
+					if(ruleList[i].zone == 'inside zone' && ruleList[i].currentZone == 'outside zone'){//moved from in to out
+						fireAction = true;
+					}
+					ruleList[i].currentZone = 'inside zone';
+				}
 				
+				if(fireAction){//perform necessary action
+					switch(ruleList[i].device){
+						case 'Att':
+							//SMS SECTION
+							break;
+						case 'Nest':
+							if(ruleList[i].SetStatus != null){
+								if(ruleList[i].SetStatus == 'home'){
+									var xhr = Ti.Network.createHTTPClient();
+									xhr.setTimeout(120000);
+									xhr.open('GET', 'http://atthack.pagekite.me/nest_home');
+									xhr.onload = function(incJSON) {
+									};
+									xhr.send();
+								}
+								else{
+									var xhr = Ti.Network.createHTTPClient();
+									xhr.setTimeout(120000);
+									xhr.open('GET', 'http://atthack.pagekite.me/nest_away');
+									xhr.onload = function(incJSON) {
+									};
+									xhr.send();
+								}
+							}
+							else if(ruleList[i].SetTemp != null){
+								var xhr = Ti.Network.createHTTPClient();
+								xhr.setTimeout(120000);
+								xhr.open('GET', 'http://atthack.pagekite.me/nest');
+								xhr.onload = function(incJSON) {
+									var nestStatus = JSON.parse(incJSON.source.responseText);
+									
+									var difference = ruleList[i].SetTemp - parseInt(nestStatus.target_temperature);
+									
+									for(var i = 0; i < Math.abs(difference); i++){
+										if(difference > 0){
+											var xhr = Ti.Network.createHTTPClient();
+											xhr.setTimeout(120000);
+											xhr.open('GET', 'http://atthack.pagekite.me/nest_up');
+											xhr.onload = function(incJSON) {
+											};
+											xhr.send();
+										}
+										else if(difference < 0){
+											var xhr = Ti.Network.createHTTPClient();
+											xhr.setTimeout(120000);
+											xhr.open('GET', 'http://atthack.pagekite.me/nest_down');
+											xhr.onload = function(incJSON) {
+											};
+											xhr.send();
+										}
+									}
+								};
+								
+							}
+							break;
+						case 'WeMo':
+							if(ruleList[i].TurnOnOff != null){
+								if(ruleList[i].TurnOnOff == 'on'){
+									var xhr = Ti.Network.createHTTPClient();
+									xhr.setTimeout(120000);
+									xhr.open('GET', 'http://atthack.pagekite.me/wemo_on');
+									xhr.onload = function(incJSON) {
+									};
+									xhr.send();
+								}
+								else if(ruleList[i].TurnOnOff == 'off'){
+									var xhr = Ti.Network.createHTTPClient();
+									xhr.setTimeout(120000);
+									xhr.open('GET', 'http://atthack.pagekite.me/wemo_off');
+									xhr.onload = function(incJSON) {
+									};
+									xhr.send();
+								}
+							}
+							break;
+						default:
+							break;
+					}
+				}
 			}
 		};
 	}

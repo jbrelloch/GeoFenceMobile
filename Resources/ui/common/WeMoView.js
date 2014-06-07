@@ -8,7 +8,7 @@ function WeMoView() {
 	var onButton = Ti.UI.createButton({
 	   title: 'ON',
 	   backgroundColor: 'gray',
-	   left: 15,
+	   left: 55,
 	   height: 100,
 	   width: 100
 	});
@@ -31,7 +31,7 @@ function WeMoView() {
 	var offButton = Ti.UI.createButton({
 	   title: 'OFF',
 	   backgroundColor: 'gray',
-	   right: 15,
+	   right: 55,
 	   height: 100,
 	   width: 100
 	});

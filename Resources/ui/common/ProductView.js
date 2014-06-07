@@ -43,7 +43,7 @@ function ProductView() {
 	
 	var ruleView = Ti.UI.createView({
 		backgroundColor:'white',
-		bottom:0,
+		top:'50%',
 		width:'100%',
 		height:'50%'
 	});
