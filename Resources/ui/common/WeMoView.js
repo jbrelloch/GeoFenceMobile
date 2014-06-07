@@ -6,6 +6,7 @@ function WeMoView() {
 	});
 	
 	var onButton = Ti.UI.createButton({
+		id:'onButton',
 	   title: 'ON',
 	   backgroundColor: 'gray',
 	   left: 55,
@@ -29,6 +30,7 @@ function WeMoView() {
 	});
 	self.add(onButton);
 	var offButton = Ti.UI.createButton({
+		id:'offButton',
 	   title: 'OFF',
 	   backgroundColor: 'gray',
 	   right: 55,
@@ -36,8 +38,8 @@ function WeMoView() {
 	   width: 100
 	});
 	offButton.addEventListener('click',function(e){
-		onButton.backgroundColor = 'blue';
-		offButton.backgroundColor = 'gray';
+		onButton.backgroundColor = 'gray';
+		offButton.backgroundColor = 'blue';
 		
 		if(!self.DISABLE_CONTROLS) {
 			var xhr = Ti.Network.createHTTPClient();

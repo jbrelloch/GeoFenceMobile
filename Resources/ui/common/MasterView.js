@@ -20,7 +20,7 @@ function MasterView() {
 		homeButton.addEventListener('click',function(e){
 			var xhr = Ti.Network.createHTTPClient();
 			xhr.setTimeout(120000);
-			xhr.open('GET', 'http://atthack.pagekite.me/all_home');
+			xhr.open('GET', 'http://atthack.pagekite.me/all_home/53932c9d550ac16547a98f4b');
 			xhr.onload = function(incJSON) {
 			};
 			xhr.send();
@@ -44,7 +44,7 @@ function MasterView() {
 		awayButton.addEventListener('click',function(e){
 			var xhr = Ti.Network.createHTTPClient();
 			xhr.setTimeout(120000);
-			xhr.open('GET', 'http://atthack.pagekite.me/all_away');
+			xhr.open('GET', 'http://atthack.pagekite.me/all_away/53932c9d550ac16547a98f4b');
 			xhr.onload = function(incJSON) {
 			};
 			xhr.send();
@@ -125,7 +125,7 @@ function MasterView() {
 		Ti.Android.startService(intent);
 	}
 			
-	Ti.App.Properties.setList('RuleList', []);
+	//Ti.App.Properties.setList('RuleList', []);
 			
 	return self;
 };

@@ -156,23 +156,47 @@ function AddRuleView(parentView, parentsParentView, controlView) {
 					controlView.fireEvent('addAttRuleComplete', {});
 					break;
 				case 'Nest':
-					if(controlView.homeButton.backgroundColor = 'blue') {
+					var homeBut = {};
+					var awayBut = {};
+					var tempLbl = {};
+					for(var i = 0; i < controlView.children.length; i++){
+						if(controlView.children[i].id == "homeButton"){
+							homeBut = controlView.children[i];
+						}
+						else if(controlView.children[i].id == "awayButton"){
+							awayBut = controlView.children[i];
+						}
+						else if(controlView.children[i].id == "tempLabel"){
+							tempLbl = controlView.children[i];
+						}
+					}
+					if(homeBut.backgroundColor == 'blue') {
 						rule.SetStatus = "home";
 					}
-					else if(controlView.awayButton.backgroundColor = 'blue') {
+					else if(awayBut.backgroundColor == 'blue') {
 						rule.SetStatus = "away";
 					}
 					else {
-						rule.SetTemp = controlView.tempLabel.text;
+						rule.SetTemp = tempLbl.text;
 					}
 			
 					controlView.fireEvent('addNestRuleComplete', {});
 					break;
 				case 'WeMo':
-					if(controlView.onButton.backgroundColor = 'blue') {
+					var onBut = {};
+					var offBut = {};
+					for(var i = 0; i < controlView.children.length; i++){
+						if(controlView.children[i].id == "onButton"){
+							onBut = controlView.children[i];
+						}
+						else if(controlView.children[i].id == "offButton"){
+							offBut = controlView.children[i];
+						}
+					}
+					if(onBut.backgroundColor == 'blue') {
 						rule.TurnOnOff = "on";
 					}
-					else if(controlView.offButton.backgroundColor = 'blue') {
+					else if(offBut.backgroundColor == 'blue') {
 						rule.TurnOnOff = "off";
 					}
 					controlView.fireEvent('addWeMoRuleComplete', {});

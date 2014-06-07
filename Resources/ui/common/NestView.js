@@ -17,6 +17,7 @@ function NestView() {
 	self.add(circle);
 	
 	var tempLabel = Ti.UI.createLabel({
+			id:'tempLabel',
 			color: 'white',
 			font: { fontSize:32 },
 			text: '##',
@@ -32,6 +33,7 @@ function NestView() {
 	
 	//LEFT BUTTONS
 	var homeButton = Ti.UI.createButton({
+		id:'homeButton',
 	   title: 'home',
 	   backgroundColor: 'gray',
 	   top: 60,
@@ -59,6 +61,7 @@ function NestView() {
 	});
 	self.add(homeButton);
 	var awayButton = Ti.UI.createButton({
+		id:'awayButton',
 	   title: 'away',
 	   backgroundColor: 'gray',
 	   top: 111,

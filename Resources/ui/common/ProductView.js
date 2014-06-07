@@ -1,6 +1,7 @@
 function ProductView() {
 	//declare module dependencies
 	var AddRuleView = require('ui/common/AddRuleView');
+	var RuleView = require('ui/common/RuleView');
 	var NestView = require('ui/common/NestView');
 	var WeMoView = require('ui/common/WeMoView');
 	var AttView = require('ui/common/AttView');
@@ -81,6 +82,17 @@ function ProductView() {
 			bottom:0,
 			backgroundColor:'white',
 	    	separatorColor :'#E0CD66'
+		});
+		ruleTableView.addEventListener('click', function(e) {
+			var ruleList = Ti.App.Properties.getList('RuleList', []);
+			var ruleFound = {};
+			for(var i = 0; i < ruleList.length; i++){
+				if(ruleList[i].name == e.rowData.title){
+					ruleFound = ruleList[i];
+				}
+			}
+			var ruleView = RuleView(ruleFound, self);
+			self.add(ruleView);
 		});
 		ruleView.add(ruleTableView);
 	self.add(ruleView);
