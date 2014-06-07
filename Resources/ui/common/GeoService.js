@@ -12,8 +12,28 @@ var CalculateDist = function(lat1, lon1, lat2, lon2, unit) {
     dist = dist * 60 * 1.1515;
     if (unit=="K") { dist = dist * 1.609344; }
     if (unit=="N") { dist = dist * 0.8684; }
-    return dist
+    return dist;
 };
+
+/////////////////////////////////////////////////////////////////
+// DEVICE FORMAT
+// device: parentsParentView.SELECTED_DEVICE,
+// latitude: latitudeField.value,
+// longitude: longitudeField.value,
+// radius: radiusField.value,
+// unit: unitPicker.getSelectedRow(0).title,
+// zone: zonePicker.getSelectedRow(0).title,
+// currentZone: zonePicker.getSelectedRow(0).title,
+// name: nameField.value
+// 
+// NEST
+// SetStatus
+// SetTemp
+// 
+// WEMO
+// TurnOnOff
+/////////////////////////////////////////////////////////////////
+
 
 // this will switch on the GPS
 Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
@@ -23,23 +43,21 @@ Titanium.Geolocation.getCurrentPosition(function(e){
 	if(e.success){
 		var ruleList = Ti.App.Properties.getList('RuleList', []);
 		
-		e.coords;
-		e.coords.latitude;
-		e.coords.longitude;
+		var dist = 99999999;
 		for(var i=0; i<ruleList.length; i++){
 			if(ruleList[i].unit == 'miles' || ruleList[i].unit == 'feet'){
-				var imperialDist = CalculateDist(e.coords.latitude, e.coords.longitude, ruleList[i].latitude, ruleList[i].longitude, "M");
+				dist = CalculateDist(e.coords.latitude, e.coords.longitude, ruleList[i].latitude, ruleList[i].longitude, "M");
 				if(ruleList[i].unit == 'feet'){
-					imperialDist = imperialDist * 5280;
+					dist = imperialDist * 5280;
 				}
 			}
 			else if(ruleList[i].unit == 'kilometers' || ruleList[i].unit == 'meters'){
-				var metricDist = CalculateDist(e.coords.latitude, e.coords.longitude, ruleList[i].latitude, ruleList[i].longitude, "M");
+				dist = CalculateDist(e.coords.latitude, e.coords.longitude, ruleList[i].latitude, ruleList[i].longitude, "M");
 				if(ruleList[i].unit == 'meters'){
-					metricDist = metricDist * 1000;
+					dist = metricDist * 1000;
 				}
 			}
 		};
 	}
-}
+});
 

@@ -1,4 +1,4 @@
-function AddRuleView(parentView, parentsParentView) {	
+function AddRuleView(parentView, parentsParentView, controlView) {	
 	//declare module dependencies
 	var FinderView = require('ui/common/FinderView');
 	
@@ -147,8 +147,40 @@ function AddRuleView(parentView, parentsParentView) {
 				radius: radiusField.value,
 				unit: unitPicker.getSelectedRow(0).title,
 				zone: zonePicker.getSelectedRow(0).title,
-				zoneName: nameField.value
+				currentZone: zonePicker.getSelectedRow(0).title,
+				name: nameField.value
 			};
+			switch(parentsParentView.SELECTED_DEVICE)
+			{
+				case 'At&t':
+					controlView.fireEvent('addAttRuleComplete', {});
+					break;
+				case 'NEST':
+					if(controlView.homeButton.backgroundColor = 'blue') {
+						rule.SetStatus = "home";
+					}
+					else if(controlView.awayButton.backgroundColor = 'blue') {
+						rule.SetStatus = "away";
+					}
+					else {
+						rule.SetTemp = controlView.tempLabel.text;
+					}
+			
+					controlView.fireEvent('addNestRuleComplete', {});
+					break;
+				case 'WeMo':
+					if(controlView.onButton.backgroundColor = 'blue') {
+						rule.TurnOnOff = "on";
+					}
+					else if(controlView.offButton.backgroundColor = 'blue') {
+						rule.TurnOnOff = "off";
+					}
+					controlView.fireEvent('addWeMoRuleComplete', {});
+					break;
+				default:
+					break;
+			}
+			
 			ruleList.push(rule);
 			
 			Ti.App.Properties.setList('RuleList', ruleList);
@@ -156,6 +188,7 @@ function AddRuleView(parentView, parentsParentView) {
 			parentsParentView.fireEvent('refreshRuleList', {
 				device: parentsParentView.SELECTED_DEVICE
 			});
+			
 			parentView.remove(self);
 		}
 	});
@@ -169,6 +202,20 @@ function AddRuleView(parentView, parentsParentView) {
 	   width: 100
 	});
 	cancelButton.addEventListener('click',function(e){
+		switch(parentsParentView.SELECTED_DEVICE)
+		{
+			case 'At&t':
+				controlView.fireEvent('addAttRuleComplete', {});
+				break;
+			case 'Nest':
+				controlView.fireEvent('addNestRuleComplete', {});
+				break;
+			case 'WeMo':
+				controlView.fireEvent('addWeMoRuleComplete', {});
+				break;
+			default:
+				break;
+		}
 		parentView.remove(self);
 	});
 	self.add(cancelButton);

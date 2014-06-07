@@ -69,7 +69,8 @@ function ProductView() {
 			   height: 48
 			});
 			addRuleButton.addEventListener('click',function(e){
-				var addRuleView = AddRuleView(ruleView, self);
+				self.SELECTED_CONTROL_VIEW.fireEvent('add'+self.SELECTED_DEVICE+'Rule',{});
+				var addRuleView = AddRuleView(ruleView, self, self.SELECTED_CONTROL_VIEW);
 				ruleView.add(addRuleView);
 			});
 			ruleListHeaderView.add(addRuleButton);
@@ -94,7 +95,7 @@ function ProductView() {
 		for(var i=0; i<ruleList.length; i++){
 			if(ruleList[i].device == self.SELECTED_DEVICE) {
 				dataEntry = {
-					title:ruleList[i].zoneName,
+					title:ruleList[i].name,
 					//subtitle:'Radius: '+ruleList[i].radius+' '+ruleList[i].unit,
 					hasChild:true, 
 					color: 'black', 
@@ -117,14 +118,17 @@ function ProductView() {
 		{
 			case 'At&t':
 				var attView = AttView();
+				self.SELECTED_CONTROL_VIEW = attView;
 				controlView.add(attView);
 				break;
-			case 'NEST':
+			case 'Nest':
 				var nestView = NestView();
+				self.SELECTED_CONTROL_VIEW = nestView;
 				controlView.add(nestView);
 				break;
 			case 'WeMo':
 				var weMoView = WeMoView();
+				self.SELECTED_CONTROL_VIEW = weMoView;
 				controlView.add(weMoView);
 				break;
 			default:
