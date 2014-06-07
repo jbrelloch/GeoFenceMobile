@@ -3,16 +3,37 @@ function ProductView() {
 	var AddRuleView = require('ui/common/AddRuleView');
 	var NestView = require('ui/common/NestView');
 	var WeMoView = require('ui/common/WeMoView');
+	var AttView = require('ui/common/AttView');
 	
-	var self = Ti.UI.createView({
+	var self = Ti.UI.createScrollView({
 		backgroundColor:'white'
 	});
+	
+	///////HEADER AREA/////////////////////
+	
+	var headerView = Ti.UI.createView({
+		height:'10%',
+		width:'100%',
+		top:0,
+		backgroundColor:'#CCAC00'
+	});
+		var titleLabel = Ti.UI.createLabel({
+			color: 'black',
+			font: { fontSize:48 },
+			shadowColor: '#998100',
+			shadowOffset: {x:5, y:5},
+			shadowRadius: 3,
+			text: 'ERROR',
+			left: 5
+		});
+		headerView.add(titleLabel);
+	self.add(headerView);
 	
 	///////CONTROL AREA/////////////////////
 	
 	var controlView = Ti.UI.createView({
 		backgroundColor:'white',
-		top:0,
+		top:'10%',
 		width:'100%',
 		height:'40%'
 	});
@@ -24,7 +45,7 @@ function ProductView() {
 		backgroundColor:'white',
 		bottom:0,
 		width:'100%',
-		height:'60%'
+		height:'50%'
 	});
 		var ruleListHeaderView = Ti.UI.createView({
 			height:'20%',
@@ -39,36 +60,65 @@ function ProductView() {
 				shadowOffset: {x:5, y:5},
 				shadowRadius: 3,
 				text: 'Rules',
-				top: 2,
 				left: 5
 			});
 			ruleListHeaderView.add(ruleLabel);
 			var addRuleButton = Ti.UI.createButton({
-			   title: '+',
-			   top: 2,
+			   title: 'add',
 			   right: 5,
 			   height: 48
 			});
 			addRuleButton.addEventListener('click',function(e){
-				var addRuleView = AddRuleView(ruleView);
+				var addRuleView = AddRuleView(ruleView, self);
 				ruleView.add(addRuleView);
 			});
 			ruleListHeaderView.add(addRuleButton);
 		ruleView.add(ruleListHeaderView);
-		var ruleListView = Ti.UI.createListView({
+		var ruleTableView = Ti.UI.createTableView({
 			height:'80%',
 			width:'100%',
-			bottom:0
+			bottom:0,
+			backgroundColor:'white',
+	    	separatorColor :'#E0CD66'
 		});
-		ruleView.add(ruleListView);
+		ruleView.add(ruleTableView);
 	self.add(ruleView);
 	
 	///////LISTENER AREA////////////////////
 
+	self.addEventListener('refreshRuleList', function(e) {
+		var ruleList = Ti.App.Properties.getList('RuleList', []);
+		
+		var data = [];
+		
+		for(var i=0; i<ruleList.length; i++){
+			if(ruleList[i].device == self.SELECTED_DEVICE) {
+				dataEntry = {
+					title:ruleList[i].zoneName,
+					//subtitle:'Radius: '+ruleList[i].radius+' '+ruleList[i].unit,
+					hasChild:true, 
+					color: 'black', 
+					font:{
+						fontFamily:'Helvetica Neue',
+						fontSize:32
+					}
+				};
+				data.push(dataEntry);
+			}
+		};
+		
+		ruleTableView.data = data;
+	});
+
 	self.addEventListener('itemSelected', function(e) {
-		//lbl.text = e.name;
+		titleLabel.text = e.name;
+		self.SELECTED_DEVICE = e.name;
 		switch(e.name)
 		{
+			case 'At&t':
+				var attView = AttView();
+				controlView.add(attView);
+				break;
 			case 'NEST':
 				var nestView = NestView();
 				controlView.add(nestView);
@@ -80,6 +130,10 @@ function ProductView() {
 			default:
 				break;
 		}
+		
+		self.fireEvent('refreshRuleList', {
+			device: e.name
+		});
 	});
 
 	return self;

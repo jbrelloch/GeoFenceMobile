@@ -7,7 +7,7 @@ function ApplicationWindow() {
 	var self = Ti.UI.createWindow({
 		title:'Products',
 		exitOnClose:true,
-		navBarHidden:false,
+		navBarHidden:true,
 		backgroundColor:'#ffffff'
 	});
 
@@ -20,7 +20,7 @@ function ApplicationWindow() {
 		var productView = ProductView();
 		var productContainerWindow = Ti.UI.createWindow({
 			title:'Details',
-			navBarHidden:false,
+			navBarHidden:true,
 			backgroundColor:'#ffffff'
 		});
 		productContainerWindow.add(productView);
@@ -29,6 +29,7 @@ function ApplicationWindow() {
 	});
 	
 	/////////////////SERVICE///////////////////////
+	
 	
 	return self;
 };

@@ -1,6 +1,6 @@
 function NestView() {	
 	var self = Ti.UI.createView({
-		backgroundColor:'black',
+		backgroundColor:'white',
 		width:'100%',
 		height:'100%'
 	});
@@ -12,19 +12,20 @@ function NestView() {
             borderColor: 'blue',
             backgroundColor: 'blue'
 	});
-		var tempLabel = Ti.UI.createLabel({
-				color: 'white',
-				font: { fontSize:32 },
-				text: '##',
-		});
-		circle.add(tempLabel);
 	self.add(circle);
+	
+	var tempLabel = Ti.UI.createLabel({
+			color: 'white',
+			font: { fontSize:32 },
+			text: '##',
+	});
+	self.add(tempLabel);
 	
 	//LEFT BUTTONS
 	var homeButton = Ti.UI.createButton({
 	   title: 'home',
-	   top: 10,
-	   left: 10,
+	   top: 60,
+	   left: 25,
 	   height: 50,
 	   width: 70
 	});
@@ -34,8 +35,8 @@ function NestView() {
 	self.add(homeButton);
 	var awayButton = Ti.UI.createButton({
 	   title: 'away',
-	   top: 61,
-	   left: 10,
+	   top: 111,
+	   left: 25,
 	   height: 50,
 	   width: 70
 	});
@@ -47,8 +48,8 @@ function NestView() {
 	//RIGHT BUTTONS
 	var plusButton = Ti.UI.createButton({
 	   title: '+',
-	   top: 10,
-	   right: 10,
+	   top: 60,
+	   right: 35,
 	   height: 50,
 	   width: 50
 	});
@@ -58,8 +59,8 @@ function NestView() {
 	self.add(plusButton);
 	var minusButton = Ti.UI.createButton({
 	   title: '-',
-	   top: 61,
-	   right: 10,
+	   top: 111,
+	   right: 35,
 	   height: 50,
 	   width: 50
 	});

@@ -1,9 +1,5 @@
-function WeMoView() {	
-	var self = Ti.UI.createView({
-		backgroundColor:'black'
-	});
 
-	return self;
-};
 
-module.exports = WeMoView;
+var service = Titanium.Android.currentService;
+var intent = service.intent;
+
